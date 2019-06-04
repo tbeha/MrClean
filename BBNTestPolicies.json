@@ -1,0 +1,100 @@
+[
+    {
+        "name":  "Fixed Default Backup Policy",
+        "id":  "aa71aaff-0a86-4484-9eee-a464d961b6c3",
+        "rules":  [
+
+                  ]
+    },
+    {
+        "name":  "TestPolicy",
+        "id":  "5a043e78-0018-4741-b828-e29c0899421a",
+        "rules":  [
+                      {
+                          "frequency":  1440,
+                          "retention":  43200,
+                          "days":  "Mon,Tue,Wed,Thu,Fri,Sat",
+                          "id":  "faf37628-9fac-4bd1-81b9-af4acf59d352",
+                          "number":  0,
+                          "destination_id":  "705049b7-574e-4fae-81d4-330d5d84aeaa",
+                          "start_time":  "00:20",
+                          "end_time":  "00:20",
+                          "application_consistent":  "false",
+						  "consistency_type": "NONE",
+                          "destination_name":  "Local",
+                          "max_backups":  30
+                      },
+                      {
+                          "frequency":  1440,
+                          "retention":  43200,
+                          "days":  "Mon,Tue,Wed,Thu,Fri,Sat",
+                          "id":  "ade01df7-0f8a-45b7-8116-4e475d733ae8",
+                          "number":  1,
+                          "destination_id":  "811bebe5-ee3a-48de-b191-832c32656902",
+                          "start_time":  "00:21",
+                          "end_time":  "00:21",
+                          "application_consistent":  "false",
+						  "consistency_type": "NONE",						  
+                          "destination_name":  "Remote",
+                          "max_backups":  30
+                      },
+                      {
+                          "frequency":  1440,
+                          "retention":  129600,
+                          "days":  "Sun",
+                          "id":  "cdeea0a6-7ef7-4cda-a47c-ade0a2600b51",
+                          "number":  2,
+                          "destination_id":  "705049b7-574e-4fae-81d4-330d5d84aeaa",
+                          "start_time":  "00:25",
+                          "end_time":  "00:25",
+                          "application_consistent":  "false",
+						  "consistency_type": "NONE",
+                          "destination_name":  "Local",
+                          "max_backups":  90
+                      },
+                      {
+                          "frequency":  1440,
+                          "retention":  129600,
+                          "days":  "Sun",
+                          "id":  "5a18b7c9-0b4e-4607-9eef-67ff9b8980ac",
+                          "number":  3,
+                          "destination_id":  "811bebe5-ee3a-48de-b191-832c32656902",
+                          "start_time":  "00:26",
+                          "end_time":  "00:26",
+                          "application_consistent":  "false",
+ 						  "consistency_type": "NONE",
+                         "destination_name":  "Remote",
+                          "max_backups":  90
+                      },
+                      {
+                          "frequency":  1440,
+                          "retention":  1051200,
+                          "days":  "Last",
+                          "id":  "6a13eb8f-1105-480e-8809-5aa79c9edfee",
+                          "number":  4,
+                          "destination_id":  "705049b7-574e-4fae-81d4-330d5d84aeaa",
+                          "start_time":  "00:30",
+                          "end_time":  "00:30",
+                          "application_consistent":  "false",
+						  "consistency_type": "NONE",
+                          "destination_name":  "Local",
+                          "max_backups":  730
+                      },
+                      {
+                          "frequency":  1440,
+                          "retention":  1051200,
+                          "days":  "Last",
+                          "id":  "6e965b87-679c-436c-a47e-ed52087fd75c",
+                          "number":  5,
+                          "destination_id":  "811bebe5-ee3a-48de-b191-832c32656902",
+                          "start_time":  "00:31",
+                          "end_time":  "00:31",
+                          "application_consistent":  "false",
+						  "consistency_type": "NONE",
+                          "destination_name":  "Remote",
+                          "max_backups":  730
+                      }
+                  ]
+    }
+	
+]
