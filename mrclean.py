@@ -16,7 +16,7 @@ Copyright (c) 2019 Thomas Beha
 
 """
 
-from cryptography.fernet import Fernet
+from cryptography.fernet import *
 import getpass
 from lxml import etree 
 from SimpliVityClass import *
@@ -36,12 +36,13 @@ def logclose(f):
     f.write(str(datetime.today())+": Logfile closed \n")
     f.close()
 
-
-keyfile='mrclean.key'
-xmlfile='mrclean.xml'
+#path = '/opt/mrclean/'
+path = './'
+keyfile= path + 'data/mrclean.key'
+xmlfile=path + 'data/mrclean.xml'
 
 today=datetime.today()
-logfile="mrclean."+str(datetime.today())[0:10]+".log"
+logfile=path+"data/mrclean."+str(datetime.today())[0:10]+".log"
 log=logopen(logfile)
 
 """ Read keyfile #########################################################################"""
@@ -87,12 +88,12 @@ logwriter(log,"###################################################")
 """ Open a connection to the SimpliVity Rest API """          
 url="https://"+ovc+"/api/"          
 svt = SimpliVity(url)
-svt.connect(user,password)
+svt.Connect(user,password)
 logwriter(log,"Opened a connection to OVC: "+ovc+"   "+url)    
 
 """ Open a connection to the vCenter """
 url="https://"+vcenter+"/rest/"
-vc = vCenter('https://10.0.40.40/rest/')
+vc = vCenter(url)
 token = vc.connect(user,password)
 logwriter(log,"Connection opened to vcenter"+vcenter)
       
@@ -132,7 +133,7 @@ for svtbx in svtbackups:
     else:
         bxvmname = svtbx.get("virtual_machine_name")
         for vmp in VMsToStay:
-            if(vmp.text == vmname):
+            if(vmp.text == bxvmname):
                 rmBackup = False        
     if rmBackup:
         logwriter(log,"Delete backup: "+svtbx.get("name")+"::"+svtbx.get("type")+"::"+svtbx.get("virtual_machine_name")+"::"+svtbx.get("id"))
@@ -159,7 +160,7 @@ logwriter(log,"Clean up policies")
 localClusterId = svt.GetClusterId(localCluster)
 remoteClusterId = svt.GetClusterId(remoteCluster)      
 svt_policies = svt.GetPolicy()
-with open('BBNRefPolicies.json', 'r') as fp:
+with open(path+'data/BBNRefPolicies.json', 'r') as fp:
     policies = json.load(fp) 
 """ Delete unnecessary policies """
 logwriter(log,"Delete unnecessary policies")
