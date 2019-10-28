@@ -28,7 +28,7 @@ def logwriter(f, text):
     f.write(str(datetime.today()) +": "+text+" \n")
     
 def logopen(filename):
-    f = open(filename,'w')
+    f = open(filename,"w")
     f.write(str(datetime.today())+": Logfile opened \n")
     return f
 

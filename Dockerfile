@@ -23,5 +23,5 @@ COPY ./vCenterClass.py /opt/mrclean
 #COPY ./data/mrclean.xml /opt/mrclean/data
 #COPY ./data/mrclean.key /opt/mrclean/data
 #COPY ./data/BBNRefPolicies.json /opt/mrclean/data
-RUN echo "0 22 * * * root /usr/bin/python3 /opt/mrclean/mrclean.py" >> /etc/crontab && \
-    service cron restart
+#RUN echo "0 22 * * * root /usr/bin/python3 /opt/mrclean/mrclean.py" >> /etc/crontab && \
+#    service cron restart
