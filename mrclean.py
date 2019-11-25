@@ -70,7 +70,7 @@ backups=tree.findall("Backup")
 datastores=tree.findall("Datastore")
 localCluster=tree.find("LocalCluster").text
 remoteCluster=tree.find("RemoteCluster").text
-prefix=tree.find("Prefix").text
+prefix=tree.findall("Prefix")
 
 logwriter(log,"Clean Up Parameters")
 logwriter(log,"OVC: "+ovc)
@@ -86,6 +86,8 @@ for datastore in datastores:
     logwriter(log,datastore.text)    
 logwriter(log,"LocalCluster:  "+localCluster)
 logwriter(log,"RemoteCluster: "+remoteCluster)
+for pre in prefix:
+    logwriter(log,"Prefix: "+pre.text)
 logwriter(log,"###################################################")
 
 """ Start the clean up process """
@@ -120,12 +122,14 @@ json_data=vm_response["value"]
 for vm in json_data:
     rmVM=True
     vmname = vm.get("name")
-    if(vmname.find(prefix)>-1):
-        rmVM = False
-    else:
-        for vmp in VMsToStay:
+    for pre in prefix:
+        if(vmname.find(pre.text)>-1):
+            rmVM = False
+            break
+    for vmp in VMsToStay:
             if(vmp.text == vmname):
                 rmVM = False
+                break
     if rmVM:
         logwriter(log,vm.get("name")+" is not on the blacklist.")
         if vm.get("power_state") == "POWERED_ON":

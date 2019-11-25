@@ -4,12 +4,6 @@ mrclean.key
 keys.key
 __pycache__/SimpliVityClass.cpython-36.pyc
 __pycache__/vCenterClass.cpython-36.pyc
-mrclean.2019-03-07.log
-mrclean.2019-03-03.log
-mrclean.2019-03-08.log
-mrclean.2019-03-14.log
-mrclean.2019-03-20.log
-logfile.log
 SimpliVityClass.py.old
 __pycache__/SimpliVityClass.cpython-37.pyc
 data/BBNRefPolicies.json
@@ -19,7 +13,4 @@ __pycache__/vCenterClass.cpython-37.pyc
 SimpliVityClass.py
 mrclean.xml.old.xml
 SimpliVityClass.py
-test.2019-10-29.log
-data/mrclean.2019-10-29.log
-test.2019-11-24.log
 test.py
