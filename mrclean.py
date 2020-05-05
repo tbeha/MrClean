@@ -123,7 +123,7 @@ for vm in json_data:
     rmVM=True
     vmname = vm.get("name")
     for pre in prefix:
-        if(vmname.find(pre.text)>-1):
+        if(vmname.find(pre.text) == 0):
             rmVM = False
             break
     for vmp in VMsToStay:
@@ -157,6 +157,14 @@ for svtbx in svtbackups:
                 rmBackup = False
     else:
         bxvmname = svtbx.get("virtual_machine_name")
+        vm_type = svtbx.get("virtual_machine_type")
+        if (vm_type == 'TEMPLATE'):
+            rmBackup = False
+            break
+        for pre in prefix:
+            if(bxvmname.find(pre.text) == 0):
+                rmBackup = False
+                break
         for vmp in VMsToStay:
             if(vmp.text == bxvmname):
                 rmBackup = False        
