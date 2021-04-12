@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 CTC SimpliVity Demo environment Clean Up script
-Copyright (c) 2019 Thomas Beha
+Copyright (c) 2021 Thomas Beha
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@ Copyright (c) 2019 Thomas Beha
     GNU General Public License for more details.
     https://www.gnu.org/licenses/gpl-3.0.en.html 
 
-    v2.0  October 29, 2019
-
+    requires: SimpliVity Class v4.1.0
+    v3.0  April 2021
 """
 
 from cryptography.fernet import *
@@ -23,7 +23,7 @@ import getpass
 from lxml import etree 
 from SimpliVityClass import *
 from vCenterClass import *
-from datetime import datetime
+from datetime import datetime,timedelta
 import json
 
 def logwriter(f, text):
@@ -38,8 +38,8 @@ def logclose(f):
     f.write(str(datetime.today())+": Logfile closed \n")
     f.close()
 
-#path = '/opt/python/'
-path = './data/'
+path = '/opt/python/'
+#path = './data/'
 keyfile= path + 'mrclean.key'
 xmlfile=path + 'mrclean.xml'
 
@@ -141,8 +141,9 @@ for vm in json_data:
 """ Clean up backups #########################################################################"""
 
 logwriter(log,"Clean up backups")
+createdAfter = (datetime.now() - timedelta(hours=144)).isoformat(timespec='seconds')+'Z'
 try:
-    svtbackups = (svt.GetBackups(past_hours=144)).get("backups")
+    svtbackups = (svt.GetBackups({"created_after":str(createdAfter)})).get("backups")
 except SvtError as e:
     logwriter(log,"SvtError caught")
     logwriter(log,str(e.expression))
@@ -292,26 +293,19 @@ for policy in policies:
             if len(rules) > 0:
                 logwriter(log,"Create the new rules")
                 for rule in rules:
-                    if rule["destination_name"] == 'Local':
-                        clusterId = localClusterId
-                    else:
-                        clusterId = remoteClusterId
-                    if rule["application_consistent"]:
-                        appcon = 'true'
-                    else:
-                        appcon = 'false'
                     try:
-                        res=svt.AddPolicyRule(\
-                                        policy_id=svt_pol_id,\
-                                        destination=clusterId,\
-                                        frequency=rule["frequency"],\
-                                        retention=rule["retention"],\
-                                        days=rule["days"],\
-                                        startTime=rule["start_time"],\
-                                        endTime=rule["end_time"],\
-                                        appConsistent=rule["application_consistent"],\
-                                        consistencyType=rule["consistency_type"],\
-                                        replace=False) 
+                        if rule["destination_name"] == 'Local':
+                            ruleset={'destination_id':localClusterId,'frequency':rule['frequency'],'retention':rule['retention'],'days':rule['days'],\
+                                'start_time':rule['start_time'],'end_time':rule['end_time'],'application_consistent':rule["application_consistent"],'consistency_type':rule["consistency_type"]}
+                            res = svt.AddPolicyRule(policy_id=svt_pol_id, replace=False,parameters=ruleset)
+                        elif rule["destination_name"] == 'Remote':
+                            ruleset={'destination_id':remoteClusterId,'frequency':rule['frequency'],'retention':rule['retention'],'days':rule['days'],\
+                                'start_time':rule['start_time'],'end_time':rule['end_time'],'application_consistent':rule["application_consistent"],'consistency_type':rule["consistency_type"]}
+                            res = svt.AddPolicyRule(policy_id=svt_pol_id, replace=False,parameters=ruleset)
+                        else: # external store
+                            ruleset={'external_store_name':rule['external_store_name'],'frequency':rule['frequency'],'retention':rule['retention'],'days':rule['days'],\
+                                'start_time':rule['start_time'],'end_time':rule['end_time'],'application_consistent':rule["application_consistent"],'consistency_type':rule["consistency_type"]}
+                            res = svt.AddPolicyRule(policy_id=svt_pol_id, replace=False,parameters=ruleset)                               
                     except SvtError as e:
                         logwriter(log,"SvtError caught")
                         logwriter(log,str(e.expression))
