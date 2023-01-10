@@ -19,7 +19,7 @@ Copyright (c) 2021 Thomas Beha
 """
 
 from cryptography.fernet import *
-import getpass
+#import getpass
 from lxml import etree 
 from SimpliVityClass import *
 from vCenterClass import *
@@ -40,6 +40,7 @@ def logclose(f):
 
 path = '/opt/python/'
 #path = './data/'
+
 keyfile= path + 'mrclean.key'
 xmlfile=path + 'mrclean.xml'
 
