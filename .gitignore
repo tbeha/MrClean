@@ -14,3 +14,9 @@ SimpliVityClass.py
 mrclean.xml.old.xml
 SimpliVityClass.py
 test.py
+data/mrclean.2023-03-27.log
+datamrclean.2023-03-27.log
+mrclean.2023-03-27.log
+.gitignore
+__pycache__/vCenterClass.cpython-311.pyc
+BBNRefPolicies.StoreOnce3640
